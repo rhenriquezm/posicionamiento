@@ -1,0 +1,1 @@
+var app = angular.module('infoPlaceApp', ['controllers', 'ngMaterial', 'ngMap', 'ngSanitize', 'routes', 'ngMessages']);

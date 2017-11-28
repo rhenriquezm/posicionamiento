@@ -1,0 +1,363 @@
+		<md-content class="md-padding">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <img id="aers2" src="img/icons/ic_location_on_black_36px.svg" style="color:white">
+					</img>
+					<span id="aers">
+						#infoPlace
+					</span>
+                    <!-- fill up the space between left and right area -->
+                    <span flex="">
+                    </span>
+					<md-content style="color: white; background-color: transparent">
+						<img class="imgRedonda" src="img/avatar/{{usuarioBD.avatar}}.jpg"></img>
+                    </md-content>
+
+					<md-content id="aers3" style="color: white; background-color: transparent">
+						&nbsp;&nbsp;{{usuarioBD.nom_usuario}} {{usuarioBD.ap_usuario}}
+                    </md-content>
+                    <md-button ng-click="logout()">
+                        <img src="img/icons/ic_exit_to_app_white_24dp_2x.png" style="height:30px; width=auto;">
+						</img>
+                    </md-button>
+                </div>
+            </md-toolbar>
+        </md-content>
+
+        <div layout="column" layout-align="center center">
+            <md-select ng-change="fnSeleccion()" ng-model="ciudadSel" placeholder="Seleccione ciudad..." style="min-width: 200px;">
+                <md-option ng-repeat="ciudad in ciudades" ng-value="ciudad">
+                    {{ciudad.ciudad}}
+                </md-option>
+            </md-select>
+        </div>
+        <div layout="column" layout-align="center center" ng-show="ciudadSel != ''">
+            <label>
+                Mostrar:
+            </label>
+            <md-content layout-padding="">
+                <div layout-gt-sm="row">
+                    <md-checkbox aria-label="Estado1" class="yellow" ng-change="cambioEstado1()" ng-model="estado1">
+                       <div id="aers4"> Estado1</div>
+                    </md-checkbox>
+                    <md-checkbox aria-label="Estado2" class="red" ng-change="cambioEstado2()" ng-model="estado2">
+                        <div id="aers4">Estado2</div>
+                    </md-checkbox>
+                    <md-checkbox aria-label="Estado3" class="blue" ng-change="cambioEstado3()" ng-model="estado3">
+                        <div id="aers4">Estado3</div>
+                    </md-checkbox>
+                </div>
+            </md-content>
+        </div>
+        <ng-map id="mapa" center="{{posicionMapa}}" zoom="13" style="display:block; height:300px">
+            <marker data="{{empresa.id_empresa}}" icon="https://maps.google.com/mapfiles/ms/icons/{{empresa.estado}}-dot.png" ng-repeat="empresa in empresas" on-click="verEmpresa()" position="[{{empresa.lat}},{{empresa.lng}}]" title="{{empresa.nom_empresa}}" visible="{{empresa.visible}}">
+            </marker>
+        </ng-map>
+        <md-button aria-label="Nuevo" class="md-fab md-primary md-fab-bottom-right " ng-click="mostrarDialogo($event)" style="position:fixed !important;">
+            <md-tooltip md-direction="left">
+                Nuevo Registro
+            </md-tooltip>
+            <md-icon class="material-icons">
+                add_location_white
+            </md-icon>
+        </md-button>
+		<md-fab-speed-dial class="custom-fab md-scale md-fab-bottom-left" md-direction="up" md-open="false" style="position:fixed !important;">
+    <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-primary" >
+            <md-tooltip md-direction="right">
+                Descargar Reporte
+            </md-tooltip>
+            <md-icon class="material-icons">
+                picture_as_pdf
+            </md-icon>
+        </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+        <md-button aria-label="Add" class="md-fab md-raised md-mini md-warn" ng-click="descargaPdf()">
+            <md-tooltip md-direction="right">
+                General
+            </md-tooltip>
+            <md-icon aria-label="Add" class="material-icons">
+                select_all
+            </md-icon>
+        </md-button>
+        <md-button aria-label="Insert Link" class="md-fab md-raised md-mini md-warn" ng-click="descargaPdfCiudad()">
+            <md-tooltip md-direction="right">
+                Ciudad Seleccionada
+            </md-tooltip>
+            <md-icon aria-label="Insert Link" class="material-icons">
+                location_city
+            </md-icon>
+        </md-button>
+    </md-fab-actions>
+</md-fab-speed-dial>
+        <br/>
+        <div layout="row">
+            <div flex="45">
+            </div>
+            <div flex="60" ng-show="activo">
+                <div layout="column" layout-align="center center">
+                    <h1>
+                        Datos Empresa
+                    </h1>
+                </div>
+                <md-content layout-padding="">
+                    <div>
+                        <form name="datosForm" id="datosEmpresa" >
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm="">
+                                    <label>
+                                        Empresa
+                                    </label>
+                                    <md-icon md-svg-src="img/icons/ic_business_black_24px.svg">
+                                    </md-icon>
+                                    <input disabled="" ng-model="empresa" type="text">
+                                    </input>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="">
+                                    <label>
+                                        Ciudad
+                                    </label>
+                                    <md-icon md-svg-src="img/icons/ic_location_city_black_24px.svg">
+                                    </md-icon>
+                                    <input disabled="" ng-model="ciudad" type="text">
+                                    </input>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm="">
+                                    <label>
+                                        Pais
+                                    </label>
+                                    <md-icon md-svg-src="img/icons/ic_flag_black_24px.svg">
+                                    </md-icon>
+                                    <input disabled="" ng-model="pais" type="text">
+                                    </input>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="">
+                                    <label>
+                                        Direccion
+                                    </label>
+                                    <md-icon md-svg-src="img/icons/ic_location_on_black_24px.svg">
+                                    </md-icon>
+                                    <input disabled="" ng-model="direccion" type="text">
+                                    </input>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row ">
+                                <md-input-container class="md-block" flex-gt-sm="">
+                                    <label>
+                                        ID
+                                    </label>
+                                    <md-icon md-svg-src="img/icons/ic_vpn_key_black_24px.svg">
+                                    </md-icon>
+                                    <input disabled="" ng-model="id" type="text">
+                                    </input>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="50">
+                                    <label>
+                                        Estado
+                                    </label>
+                                    <md-icon class="name" md-svg-src="img/icons/ic_info_black_24px.svg">
+                                    </md-icon>
+                                    <md-select name="estado" ng-model="estado" required="">
+                                        <md-option value="1">
+                                            Estado1
+                                        </md-option>
+                                        <md-option value="2">
+                                            Estado2
+                                        </md-option>
+                                        <md-option value="3">
+                                            Estado3
+                                        </md-option>
+                                    </md-select>
+                                    <div class="errors" ng-messages="myForm.estado.$error">
+                                        <div ng-message="required">
+                                            Debes seleccionar uno..
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <md-input-container>
+                                    <md-button class="md-raised md-primary" ng-click="modificar()">
+                                        Modificar
+                                    </md-button>
+                                </md-input-container>
+                            </div>
+                        </form>
+                    </div>
+                </md-content>
+            </div>
+            <div flex="40">
+            </div>
+        </div>
+        <script id="editor.html" type="text/ng-template">
+            <md-dialog aria-label="Editar" class="dialog-60">
+        <form name="newEmpresaForm" novalidate="" ng-submit="newEmpresaForm.$valid &&guardar()">
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <md-button  class="md-icon-button" ng-click="cancel()">
+                            <md-icon md-svg-src="img/icons/ic_arrow_back_white_24px.svg" aria-label="Regresar"></md-icon>
+                            <md-tooltip  md-autohide="true">Regresar</md-tooltip>
+                        </md-button>
+                        <h2>Agregar</h2>
+                        <span flex></span>
+                        
+                        <md-button class="md-icon-button" type="submit" >
+                            <md-icon md-svg-src="img/icons/ic_save_white_24px.svg"  aria-label="Guardar"></md-icon>
+                            <md-tooltip  md-autohide="true">Guardar</md-tooltip>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content >
+                    <md-content layout-padding="">
+                    <div>
+                        
+                            <div layout-gt-xs="row">
+                                <md-input-container class="md-block" flex-gt-sm="" >
+                                    <label>
+                                        Empresa
+                                    </label>
+                                    <md-icon md-svg-src="img/icons/ic_business_black_24px.svg">
+                                    </md-icon>
+                                    <input  ng-model="newEmpresa.nombre" type="text" required>
+                                    </input>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="50">
+                                    <label>
+                                        Estado
+                                    </label>
+                                    <md-icon  md-svg-src="img/icons/ic_info_black_24px.svg">
+                                    </md-icon>
+                                    <md-select name="estado" ng-model="newEmpresa.estado" required="">
+                                        <md-option value="1">
+                                            Estado1
+                                        </md-option>
+                                        <md-option value="2">
+                                            Estado2
+                                        </md-option>
+                                        <md-option value="3">
+                                            Estado3
+                                        </md-option>
+                                    </md-select>
+                                    <div class="errors" ng-messages="myForm.estado.$error">
+                                        <div ng-message="required">
+                                            Debes seleccionar uno..
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                
+                            </div>
+                            <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm="">
+							<label>
+                                        Ciudad
+                                    </label>
+ <md-icon md-svg-src="img/icons/ic_location_city_black_24px.svg">
+                                    </md-icon>
+                                    <md-select name="ciudad" ng-model="newEmpresa.ciudad" required>
+                                        <md-option value="1">
+                                            Viña del Mar
+                                        </md-option>
+                                        <md-option value="2">
+                                            Valparaíso
+                                        </md-option>
+                                        <md-option value="3">
+                                            Con con
+                                        </md-option>
+                                        <md-option value="4">
+                                            Reñaca
+                                        </md-option>
+                                    </md-select>
+                                   
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="50">
+                                    <label>
+                                        Pais
+                                    </label>
+                                    <md-icon  md-svg-src="img/icons/ic_flag_black_24px.svg">
+                                    </md-icon>
+                                    <md-select name="pais" ng-model="newEmpresa.pais" required="">
+                                        <md-option value="1">
+                                            Chile
+                                        </md-option>
+                                    </md-select>
+                                    <div class="errors" ng-messages="myForm.estado.$error">
+                                        <div ng-message="required">
+                                            Debes seleccionar uno..
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                
+                            </div>
+                            <md-input-container class="md-block" flex-gt-sm="">
+                                    <label>
+                                        Direccion
+                                    </label>
+                                    <md-icon md-svg-src="img/icons/ic_location_on_black_24px.svg">
+                                    </md-icon>
+                                    <input  ng-model="newEmpresa.direccion" type="text" required>
+                                    </input>
+                                </md-input-container>
+
+                </md-dialog-content>
+            </form>
+											<md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+        </md-dialog>
+        </script>
+		<table id="pdf" style="display: none;">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Empresa
+            </th>
+            <th>
+                Direccion
+            </th>
+            <th>
+                Estado
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="empresa in empresasPdf">
+            <td>
+                {{empresa.id}}
+            </td>
+            <td>
+                {{empresa.nombre}}
+            </td>
+            <td>
+                {{empresa.direccion}}
+            </td>
+            <div>
+                <td ng-if="empresa.estado == 1">
+                    Estado 1
+                </td>
+                <td ng-if="empresa.estado == 2">
+                    Estado 2
+                </td>
+                <td ng-if="empresa.estado == 3">
+                    Estado 3
+                </td>
+            </div>
+        </tr>
+    </tbody>
+</table>
+<md-divider></md-divider>
+	<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+		  <md-button disabled>Navegacion</md-button>
+		  <md-button ng-click="abrirRutas()">Rutas</md-button>
+    </section>
+<md-divider></md-divider>
+<br/>
+<footer>
+            <div id="copyright" layout="row" layout-align="center center">
+                Copyright © Todos los Derechos Reservados | Solucion DUAL
+            </div>
+        </footer>
+		<br/>

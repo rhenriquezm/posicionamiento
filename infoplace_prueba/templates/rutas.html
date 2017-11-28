@@ -1,0 +1,70 @@
+<md-content class="md-padding">
+     <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <img id="aers2" src="img/icons/ic_location_on_black_36px.svg" style="color:white">
+					</img>
+					<span id="aers">
+						#infoPlace
+					</span>
+                    <!-- fill up the space between left and right area -->
+                    <span flex="">
+                    </span>
+					<md-content style="color: white; background-color: transparent">
+						<img class="imgRedonda" src="img/avatar/{{usuarioBD.avatar}}.jpg"></img>
+                    </md-content>
+
+					<md-content id="aers3" style="color: white; background-color: transparent">
+						&nbsp;&nbsp;{{usuarioBD.nom_usuario}} {{usuarioBD.ap_usuario}}
+                    </md-content>
+                    <md-button ng-click="logout()" aria-label="Follow">
+                        <img src="img/icons/ic_exit_to_app_white_24dp_2x.png" style="height:30px; width=auto;">
+						</img>
+                    </md-button>
+                </div>
+            </md-toolbar>
+</md-content>
+<div layout="column" layout-align="center center">
+    <md-select ng-change="fnSeleccion()" ng-model="ciudadSel" placeholder="Seleccione ciudad..." style="min-width: 200px;">
+        <md-option ng-repeat="ciudad in ciudades" ng-value="ciudad">
+            {{ciudad.ciudad}}
+        </md-option>
+    </md-select>
+</div>
+<ng-map center="{{posicionMapa}}" id="mapa" style="display:block; height:300px" zoom="13">
+    <marker data="{{empresa.id_empresa}}" icon="https://maps.google.com/mapfiles/ms/icons/{{empresa.estado}}-dot.png" ng-repeat="empresa in empresas" on-click="agregarEmpresa(empresa)" position="[{{empresa.lat}},{{empresa.lng}}]" title="{{empresa.nom_empresa}}" visible="{{empresa.visible}}">
+    </marker>
+    <directions custom-chips"="" destination="{{ruta[1].direccion}}, {{ruta[1].ciudad}}, {{ruta[1].pais}}" ng-model="empresasSeleccionadas" ng-repeat="ruta in rutas" origin="{{ruta[0].direccion}}, {{ruta[0].ciudad}}, {{ruta[0].pais}}" suppress-markers="true"  travel-mode="WALKING">
+    </directions>
+</ng-map>
+<br/>
+<div layout="column" layout-align="center center">
+    Empresas: <md-chips class="custom-chips" md-on-remove="remover($index)" ng-model="empresasSeleccionadas" placeholder="Seleccione Empresa" md-removable="true" readonly="true" >
+        <md-chip-template>
+            <span>
+                <strong>
+                    {{$chip.nombre}}
+                </strong>
+            </span>
+        </md-chip-template>
+    </md-chips>
+</div>
+<div layout="column" layout-align="center center">
+    <md-input-container>
+        <md-button class="md-raised md-primary" ng-click="crearRutas()">
+            Crear Ruta
+        </md-button>
+    </md-input-container>
+</div>
+<md-divider></md-divider>
+	<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+		  <md-button  ng-click="abrirNav()" >Navegacion</md-button>
+		  <md-button disabled>Rutas</md-button>
+    </section>
+<md-divider></md-divider>
+<br/>
+<footer>
+            <div id="copyright" layout="row" layout-align="center center">
+                Copyright © Todos los Derechos Reservados | Solucion DUAL
+            </div>
+        </footer>
+		<br/>

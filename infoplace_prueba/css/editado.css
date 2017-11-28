@@ -1,0 +1,71 @@
+html {
+    font-family: 'Product Sans', Arial, sans-serif;
+}
+
+md-checkbox.md-checked.yellow .md-icon {
+ background-color: rgba(255, 255, 0, 0.87);
+}
+
+md-checkbox.md-checked.red .md-icon {
+ background-color: rgba(255, 0, 0, 0.87);
+}
+
+md-checkbox.md-checked.blue .md-icon {
+ background-color: rgba(0, 0, 255, 0.87);
+}
+
+.full-heigth {
+    height: -moz-calc(100% - 64px); 
+    height: -webkit-calc(100% - 64px);
+    height: calc(100% - 64px);
+}
+
+.dialog-95 {
+    width: 95%;
+    height: auto;
+}
+
+.imgRedonda {
+    width:40px;
+    height:auto;
+    border-radius:150px;
+}
+
+.login md-card {
+    width: 340px;
+}
+
+@media screen and (max-width: 400px) {
+span#aers,
+img#aers2,
+div#aers4 {
+display: none;
+}
+md-content#aers3{
+font-size:12pt;
+}
+div#copyright{
+font-size:8pt;
+}
+.login md-card {
+    width: 250px;
+}
+}	
+
+@media screen and (max-width: 500px) {
+span#aers,
+img#aers2,
+div#aers4 {
+display: none;
+}
+md-content#aers3{
+font-size:12pt;
+}
+div#copyright{
+font-size:8pt;
+}
+.login md-card {
+    width: 250px;
+}
+}	
+
